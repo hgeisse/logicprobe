@@ -65,7 +65,7 @@ void serialOpen(void) {
   currOptions.c_iflag &= ~(IGNBRK | BRKINT | IGNPAR | PARMRK);
   currOptions.c_iflag &= ~(INPCK | ISTRIP | INLCR | IGNCR | ICRNL);
   currOptions.c_iflag &= ~(IXON | IXOFF | IXANY);
-  currOptions.c_oflag &= ~(OPOST | ONLCR | OCRNL | ONOCR | ONLRET | OFILL);
+  currOptions.c_oflag &= ~(OPOST | ONLCR | OCRNL | ONOCR | ONLRET);
   tcsetattr(sfd, TCSANOW, &currOptions);
 }
 
