@@ -12,9 +12,6 @@
 #include <termios.h>
 
 
-#define SERIAL_PORT	"/dev/ttyS0"
-
-
 static int debug = 0;
 
 static FILE *diskFile = NULL;
@@ -46,10 +43,10 @@ void error(char *fmt, ...) {
 }
 
 
-void serialOpen(void) {
-  sfd = open(SERIAL_PORT, O_RDWR | O_NOCTTY | O_NDELAY);
+void serialOpen(char *serialPort) {
+  sfd = open(serialPort, O_RDWR | O_NOCTTY | O_NDELAY);
   if (sfd == -1) {
-    error("cannot open serial port '%s'", SERIAL_PORT);
+    error("cannot open serial port '%s'", serialPort);
   }
   tcgetattr(sfd, &origOptions);
   currOptions = origOptions;
@@ -96,16 +93,16 @@ int main(int argc, char *argv[]) {
   unsigned char b;
   int i, j;
 
-  if (argc != 2) {
-    printf("Usage: %s <data_file>\n", argv[0]);
+  if (argc != 3) {
+    printf("Usage: %s <serial_port> <data_file>\n", argv[0]);
     exit(1);
   }
-  diskFile = fopen(argv[1], "wb");
-  if (diskFile == NULL) {
-    error("cannot open data file %s for write", argv[1]);
-  }
-  serialOpen();
+  serialOpen(argv[1]);
   serialRcv(&b);
+  diskFile = fopen(argv[2], "wb");
+  if (diskFile == NULL) {
+    error("cannot open data file %s for write", argv[2]);
+  }
   for (i = 0; i < 512; i++) {
     if (debug) {
       printf("%03d:  ", i);
@@ -113,7 +110,7 @@ int main(int argc, char *argv[]) {
     for (j = 0; j < 16; j++) {
       while (!serialRcv(&b)) ;
       if (fwrite(&b, 1, 1, diskFile) != 1) {
-        error("cannot write to data file %s", argv[1]);
+        error("cannot write to data file %s", argv[2]);
       }
       if (debug) {
         printf("%02X  ", b);
