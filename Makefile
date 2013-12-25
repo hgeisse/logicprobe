@@ -22,4 +22,4 @@ dist:		clean
 		 tar --exclude-vcs -cvf \
 		   LogicProbe-$(VERSION).tar \
 		   LogicProbe-$(VERSION)/* ; \
-		 gzip -f LogicProbe-$(VERS).tar)
+		 gzip -f LogicProbe-$(VERSION).tar)
