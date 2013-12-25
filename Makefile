@@ -2,6 +2,8 @@
 # Makefile for LogicProbe project
 #
 
+VERSION = 1.1
+
 DIRS = src tst
 
 all:
@@ -16,6 +18,8 @@ clean:
 		rm -f *~
 
 dist:		clean
-		(cd ../.. ; \
-		 tar --exclude-vcs -cvf logicprobe.tar logicprobe/* ; \
-		 gzip -f logicprobe.tar)
+		(cd .. ; \
+		 tar --exclude-vcs -cvf \
+		   LogicProbe-$(VERSION).tar \
+		   LogicProbe-$(VERSION)/* ; \
+		 gzip -f LogicProbe-$(VERS).tar)
