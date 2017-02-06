@@ -2,7 +2,7 @@
 # Makefile to synthesize the project for different boards
 #
 
-DIRS = XESS-XST-3S1000 Digilent-S3E-500
+DIRS = XESS-XST-3S1000 Digilent-S3E-500 Terasic-DE2-115
 
 all:
 		for i in $(DIRS) ; do \
