@@ -3,7 +3,7 @@
 #
 
 all:
-		@echo "Please use Xilinx ISE 14.5 to synthesize the project!"
+		@echo "Please use Xilinx ISE 14.7 to synthesize the project!"
 
 clean:
 		#mv lfsr128/lfsr128.xise .
