@@ -45,7 +45,7 @@ module LogicProbe(clock, reset, trigger, sample, channels, serial_out);
           end
           state <= 0;
           write <= 0;
-          rdaddr <= rdaddr + 1;
+          rdaddr <= rdaddr + 13'h1;
         end
       end
     end
@@ -142,7 +142,7 @@ module LogicProbe_sampler(clock, reset, trigger, sample,
             // last sample, memory is full
             full <= 1;
           end else begin
-            wraddr <= wraddr + 1;
+            wraddr <= wraddr + 9'h1;
           end
         end
       end else begin
@@ -150,7 +150,7 @@ module LogicProbe_sampler(clock, reset, trigger, sample,
         if (trigger == 1) begin
           triggered <= 1;
           if (sample == 1) begin
-            wraddr <= wraddr + 1;
+            wraddr <= wraddr + 9'h1;
           end
         end
       end
@@ -265,11 +265,11 @@ module LogicProbe_xmt(clock, reset, load, empty, parallel_in, serial_out);
         empty <= 1;
       end else begin
         if (count == 0) begin
-          state <= state + 1;
+          state <= state + 4'h1;
           shift[8:0] <= { 1'b1, shift[8:1] };
           count <= 1302;
         end else begin
-          count <= count - 1;
+          count <= count - 11'h1;
         end
       end
     end

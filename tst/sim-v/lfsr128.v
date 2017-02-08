@@ -24,13 +24,13 @@ module lfsr128(clk, reset_in_n, s, rs232_txd);
   wire sample;
   wire [127:0] log_data;
 
-  assign reset = (reset_counter == 4'hF) ? 0 : 1;
+  assign reset = (reset_counter == 4'hF) ? 1'b0 : 1'b1;
   always @(posedge clk) begin
     if (reset_in_n == 0) begin
       reset_counter <= 4'h0;
     end else begin
       if (reset_counter != 4'hF) begin
-        reset_counter <= reset_counter + 1;
+        reset_counter <= reset_counter + 4'h1;
       end
     end
   end
@@ -70,8 +70,8 @@ module lfsr128(clk, reset_in_n, s, rs232_txd);
   assign s[1] = lfsr2[23];
   assign s[0] = lfsr3[11];
 
-  assign trigger = (lfsr0 == 32'h7119C0CD) ? 1 : 0;
-  assign sample = 1;
+  assign trigger = (lfsr0 == 32'h7119C0CD) ? 1'b1 : 1'b0;
+  assign sample = 1'b1;
   assign log_data = { lfsr0, lfsr1, lfsr2, lfsr3 };
   LogicProbe lp(clk, reset, trigger, sample, log_data, rs232_txd);
 
