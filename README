@@ -72,8 +72,8 @@ tst                 test case, simulated as well as running on FPGAs
 If you want to run the tests, you need a Verilog simulator (I used
 Icarus Verilog) and a VCD wave viewer (I used GTK-Wave). If you want
 to use the analyzer in an FPGA, you must synthesize it (I used Xilinx
-ISE 14.7). And you need a C compiler, preferably on a Linux system,
-to receive and display the sample values.
+ISE 14.7 and Altera/Intel Quartus Prime 16.1). And you need a C compiler,
+preferably on a Linux system, to receive and display the sample values.
 
 
 5) Has the analyzer been used outside the test case?
