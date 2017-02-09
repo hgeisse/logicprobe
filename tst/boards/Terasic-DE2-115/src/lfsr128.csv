@@ -1,0 +1,13 @@
+#
+# Pin constraints for DE2-115 board
+#
+
+To,Direction,Location,I/O Bank,VREF Group,I/O Standard,Reserved
+
+clk,Input,PIN_Y2,2,B2_N0,3.3-V LVTTL,
+reset_in_n,Input,PIN_M23,6,B6_N2,2.5 V,
+s[3],Output,PIN_E24,7,B7_N1,2.5 V,
+s[2],Output,PIN_E25,7,B7_N1,2.5 V,
+s[1],Output,PIN_E22,7,B7_N0,2.5 V,
+s[0],Output,PIN_E21,7,B7_N0,2.5 V,
+rs232_txd,Output,PIN_G14,8,B8_N0,3.3-V LVTTL,
