@@ -2,13 +2,15 @@
 # Makefile to build the analyzer programs running on the PC side
 #
 
-all:		receive display
+DIRS = receive display data2vcd
 
-receive:	receive.c
-		gcc -Wall -o receive receive.c
-
-display:	display.c
-		gcc -Wall -o display display.c
+all:
+		for i in $(DIRS) ; do \
+		  $(MAKE) -C $$i all ; \
+		done
 
 clean:
-		rm -f *~ receive display
+		for i in $(DIRS) ; do \
+		  $(MAKE) -C $$i clean ; \
+		done
+		rm -f *~
