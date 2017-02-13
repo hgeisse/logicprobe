@@ -14,7 +14,9 @@ on the FPGA to store the samples in real-time. When the sample
 buffer is full, it begins to transmit the samples through a UART
 (also included in the code) over the serial line to a PC where
 the sample values are stored in a file. A simple listing program
-allows to view the samples as hexadecimal values.
+allows to view the samples as hexadecimal values. Another program
+transforms the sample file into a VCD file, which can be displayed
+by a wave viewer (like, e.g., GTKWave).
 
 
 2) How do I use it?
@@ -26,7 +28,8 @@ course). The line speed is fixed at 38400 bps; this should certainly
 be made a parameter of the design in the next version. Connect a PC
 to the other end of the serial line and run the "receive" program,
 which stores the transmitted samples into a file. You can then use
-the "display" program to examine the samples as hexadecimal numbers.
+the "display" program to examine the samples as hexadecimal numbers,
+or run the "data2vcd" program to convert the samples to a VCD file.
 
 Here is the interface to the analyzer module:
 
@@ -51,8 +54,9 @@ src                 source files
     LogicProbe.v    the logic analyzer proper
   pc                C source files (for running on the PC)
     Makefile        for building the analyzer programs
-    receive.c       RS232 receiver program
-    display.c       sample value viewer
+    receive         RS232 receiver program
+    display         sample value viewer
+    data2vcd        VCD converter
 tst                 test case, simulated as well as running on FPGAs
   Makefile          controls the build process on this level
   sim-c             simulation program in C
@@ -70,10 +74,12 @@ tst                 test case, simulated as well as running on FPGAs
 4) What else do I need?
 
 If you want to run the tests, you need a Verilog simulator (I used
-Icarus Verilog) and a VCD wave viewer (I used GTK-Wave). If you want
+Icarus Verilog) and a VCD wave viewer (I used GTKWave). If you want
 to use the analyzer in an FPGA, you must synthesize it (I used Xilinx
-ISE 14.7 and Altera/Intel Quartus Prime 16.1). And you need a C compiler,
-preferably on a Linux system, to receive and display the sample values.
+ISE 14.7 and Altera/Intel Quartus Prime 16.1). You need a C compiler,
+preferably on a Linux system, to receive and display the sample values,
+as well as (again) a VCD wave viewer in case you want to look at the
+data shown in a graphical representation.
 
 
 5) Has the analyzer been used outside the test case?
