@@ -1,0 +1,18 @@
+timescale 20 ns
+module example
+wire byte_F 127 : 120
+wire byte_E 119 : 112
+wire byte_D 111 : 104
+wire byte_C 103 :  96
+wire byte_B  95 :  88
+wire byte_A  87 :  80
+wire byte_9  79 :  72
+wire byte_8  71 :  64
+wire byte_7  63 :  56
+wire byte_6  55 :  48
+wire byte_5  47 :  40
+wire byte_4  39 :  32
+wire byte_3  31 :  24
+wire byte_2  23 :  16
+wire byte_1  15 :   8
+wire byte_0   7 :   0
