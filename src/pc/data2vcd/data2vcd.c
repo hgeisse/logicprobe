@@ -14,20 +14,24 @@
 #define LINE_SIZE	100
 #define MAX_TOKENS	20
 
+#define MIN_CODE	'!'
+#define MAX_CODE	'~'
+#define NUM_CODES	(MAX_CODE - MIN_CODE + 1)
+
 
 /**************************************************************/
 
 
 unsigned char data[512][16];
 
-int timeNumber;
-int timeFactor;
-char timeUnit[LINE_SIZE];
-char module[LINE_SIZE];
+int timeNumber = 0;	/* 1, 10, or 100 */
+int timeFactor;		/* timeNumber * timeFactor = sample interval */
+char timeUnit[3];	/* s, ms, us, ns, ps, or fs, NUL terminated */
+char *module = NULL;	/* name of module */
 struct {
   char *name;		/* name of signal */
-  int hiIndex;		/* high bit index in received data set, 0..127 */
-  int loIndex;		/* low bit index in received data set, 0..127 */
+  int hiIndex;		/* high bit index in raw data vector, 0..127 */
+  int loIndex;		/* low bit index in raw data vector, 0..127 */
   char code[3];		/* VCD identifier code for this signal */
 } signals[128];
 int numSignals = 0;	/* number of signals */
@@ -63,7 +67,7 @@ void *memAlloc(unsigned int size) {
 
 /**************************************************************/
 
-/* received data file reader */
+/* raw data file reader */
 
 
 void readData(char *dataName) {
@@ -124,11 +128,6 @@ int isName(char *str) {
   }
   return 1;
 }
-
-
-#define MIN_CODE	'!'
-#define MAX_CODE	'~'
-#define NUM_CODES	(MAX_CODE - MIN_CODE + 1)
 
 
 void numberToCode(int n, char *code) {
@@ -222,6 +221,7 @@ void readCtrl(char *ctrlName) {
         ctrlError("'module' directive needs a name",
                   ctrlName, lineno);
       }
+      module = memAlloc(strlen(tokens[1]) + 1);
       strcpy(module, tokens[1]);
     } else
     if (strcmp(tokens[0], "wire") == 0) {
@@ -274,10 +274,10 @@ void readCtrl(char *ctrlName) {
     }
   }
   fclose(ctrlFile);
-  if (timeNumber == 0 || timeUnit[0] == '\0') {
+  if (timeNumber == 0) {
     error("'timescale' directive missing in file '%s'", ctrlName);
   }
-  if (module[0] == '\0') {
+  if (module == NULL) {
     error("'module' directive missing in file '%s'", ctrlName);
   }
   if (numSignals == 0) {
